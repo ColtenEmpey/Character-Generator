@@ -1,16 +1,251 @@
-.App {
+
+body{
+  background-color: black;
+}
+#part1 {
+background-position: center;
+background-size:cover;
+background-repeat: no-repeat;
+}
+#part1 {
+  background-position: center;
+  background-size:cover;
+  background-repeat: no-repeat;
+  max-height: none;
+  }
+  #part2 {
+    background-position: left;
+    background-size:cover;
+    background-repeat: no-repeat;
+    max-height: none;
+    }
+i{
+  font-size: 1.25em;
+  color: white;
+}
+p{
+  color: white;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+input, textarea {
+  background-color: rgba(0, 0, 1, 0.80);
+  color: white;
+  max-width: 75px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.create-char{
+  color: white;
+}
+.button-div{
+  display: flex;
+  justify-content: center;
+  margin-right: 175px;
+}
+
+.subHeading{
+  width: 100%;
+  display: flex;
+  /* text-align: center; */
+  color: white;
+  background-color:rgba(0, 0, 1, 0.80);
+  min-height: 50px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.subHeading button{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 25px;
+}
+.subHeading h2{
+  margin-left: 5%;
+  width:90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 25px;
+}
+
+.create-character-form{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  width: 50%;
+  /* background-color: rgba(0, 0, 1, 0.80); */
+}
+.form-inputs{
+  display: flex;
+  flex-direction: row;
+}
+.text-inputs{
+  display: flex;
+  flex-direction: column;
+}
+.check-boxes{
+  margin-top: 20px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+}
+.box{
+  margin:10px;
+}
+
+.all-characters{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  min-height: 275px;
+}
+/* individual character */
+.character{
+  color:aliceblue;
+  display:flex;
+  max-width: 200px;
+  max-height: 250px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #282c34;
+  border-radius: 5px;
+  flex-direction: column;
+  background-color: rgba(0, 0, 1, 0.75);
+  margin: 10px;
+}
+/* character top */
+.character-top{
+  margin-top: 2px;
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+  height: 60%;
+  width: 99%;
+}
+.health{
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.health-title{
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+#delete-btn{
+  display: flex;
+  margin-left: 50px;
+}
+.health-info{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 40px;
+  
+}
+  /* image box */
+  .image-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 65%;
+    height: 125px;
+    /* border-style: solid;
+    border-width: 1px;
+    border-color: #282c34; */
+    /* background-image: url("./images/races/Elf.png"); */
+    background-size: contain;
+    background-position: center;
+    background-color: (0, 0, 1, 0.75);
+    background-repeat: no-repeat;
   }
+  .top-row .bottom-row{
+    display: flex; 
+    flex-direction: row;
+    height: 25%;
+    justify-content: space-between;
+  }
+  .top-row {
+    display: flex;
+    flex-direction: row;
+   justify-content: space-between;
+  }
+  .bottom-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+/* bottom row */
+.character-bottom{
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+  width: 99%;
+  justify-content: space-evenly;
+}
+.health-AC-titles{
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: center;
+  text-align: center;
+  width:101%;
+  color: white;
+  background-color:rgba(0, 0, 1, 0.80);
+}
+.title1{
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 2px;
+}
+.AC{
+  display: flex;
+  margin-left: 26px;
+  justify-content: flex-end;
+}
+
+#damage{
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.buttons{
+  margin: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+.health-AC-info{
+  display: flex;
+  white-space: nowrap;
+  justify-content: space-evenly;
+  width: 98%;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 5px;
+}
+.AC-list {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  border-right: 3px;
+  flex-wrap: nowrap;
+}
+
+.fallen-characters{
+  min-height: 500px;
 }
 
 .App-header {
@@ -24,15 +259,4 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
