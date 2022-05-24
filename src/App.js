@@ -7,6 +7,7 @@ import CreateCharacter from './components/CreateCharacter';
 import Characters from './components/Characters';
 import FallenCharacters from './components/FallenCharacters';
 
+
 //background images
 import fallenWorrior from "./images/backgrounds/fallenWorrior.jpg"
 import gromosh from "./images/backgrounds/gromosh.jpg"
@@ -20,6 +21,8 @@ function App() {
   return (
     <div className="App">
       <div id="part1" style={{backgroundImage: `url(${gromosh})`}}>
+
+        <Header/>
 
         <CreateCharacter characters={characters}
           fallenCharacters={fallenCharacters} 

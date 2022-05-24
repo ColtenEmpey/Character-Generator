@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 
-import Enemy, {Goblin, Dwarf, Human, Orc, Elf} from "./Enemy";
+import {Goblin, Dwarf, Human, Orc, Elf} from "./Enemy";
 
 //BOOTSTRAP
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,7 +8,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
 const CreateCharacter = (props) =>{
-    const {characters, setCharacters, fallenCharacters, setFallenCharacters}= props
+    const {characters, setCharacters}= props
 
     const [characterRequest, setCharacterRequest] = useState({
         race: '',
@@ -43,47 +43,38 @@ const CreateCharacter = (props) =>{
                 [e.target.name] : false
             })
         }
-        console.log(characterRequest)
     }
     const onSubmit = (e) =>{
         e.preventDefault()
+        const canEnrage = true; //TODO: get this from recoil
         const newCharacters = []
         const {level, armor, swift} = characterRequest
         for (let i = 0; i < characterRequest.amount; i++) {
+            let character
             if(characterRequest.race === "Human"){
-                let human1 = new Human(level, armor, swift)
-                newCharacters.push(human1)
+                character = new Human(level, armor, swift, canEnrage)
             }
             else if(characterRequest.race === "Dwarf"){
-                let dwarf1 = new Dwarf(level, armor, swift)
-                newCharacters.push(dwarf1)
+                character = new Dwarf(level, armor, swift, canEnrage)
             }
             else if(characterRequest.race === "Elf"){
-                let elf1 = new Elf(level, armor, swift)
-                newCharacters.push(elf1)
-                console.log(newCharacters)
+                character = new Elf(level, armor, swift, canEnrage)
             }
             else if(characterRequest.race === "Goblin"){
-                let goblin1 = new Goblin(level, armor, swift)
-                newCharacters.push(goblin1)
-                console.log(newCharacters)
+                character = new Goblin(level, armor, swift, canEnrage)
             }
             else if(characterRequest.race === "Orc"){
-                let ork1 = new Orc(level, armor, swift)
-                newCharacters.push(ork1)
-                console.log(newCharacters)
+                character = new Orc(level, armor, swift, canEnrage)
             }
-            
+            newCharacters.push(character)
             
           }
          setCharacters(characters.concat(newCharacters))
     }
 
+
+
     return(
-        <div className="create-char">
-            <div className="subHeading">
-            <h2>Create Character</h2>
-            </div>
             
             <form className="create-character-form" onSubmit={onSubmit}>
                 <div>
@@ -106,6 +97,7 @@ const CreateCharacter = (props) =>{
                     <div className="form-inputs">
                         <div className="text-inputs">
                             {/* character level */}
+                            
                             <label>Level</label>
                             <input name="level" placeholder="type level here" onChange={onChange}></input>
                             {/* amount to make */}
@@ -120,23 +112,20 @@ const CreateCharacter = (props) =>{
                         <div className="check-boxes">
                                 <div className="form-check">
                                     <input onChange={toggleBox} checked={characterRequest.armor} type="checkbox" className="form-check-input" id="check1" name="armor"></input>
-                                    <label className="form-check-label" for="check1">Armor</label>
+                                    <label className="form-check-label" htmlFor="check1">Armor</label>
                                 </div>
                                 <div className="form-check">
                                     <input onChange={toggleBox} checked={characterRequest.swift}  type="checkbox" className="form-check-input" id="check1" name="swift" ></input>
-                                    <label className="form-check-label" for="check1">Swift</label>
+                                    <label className="form-check-label" htmlFor="check1">Swift</label>
                                 </div> 
                             </div>
                         </div>
                     </div>
                 <div className="button-div">
-                    {/* create button */}
                     <button type="submit" className="btn btn-dark">Create</button>
-                    
-                    {/* advanced button */}
                 </div>
             </form>
-        </div>
+        
     )
 }
 

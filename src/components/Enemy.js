@@ -1,13 +1,13 @@
 import { GOBLIN, HUMAN, DWARF, ORC, ELF } from '../EnemyDefinitions';
-//TODO FIX THE HEALTH GEN
 class Enemy{
-    constructor(level, armor, swift, enemyData){
+    constructor(level, armor, swift, canEnrage, enemyData){
         this.level = level
         this.enemyData = enemyData
         this.acArray = this.genAC()
         this.health = this.genHealth()
         this.maxHealth = this.health
-        this.enrage= false
+        this.canEnrage = canEnrage
+        this.enraged= false
         this.armor= armor
         this.swift= swift
     }
@@ -32,66 +32,172 @@ class Enemy{
     }
     armorToggle(){
         this.armor = !this.armor
+        if(this.armor === true){
+            this.acArray.body= this.acArray.body +2
+            this.acArray.appendidge= this.acArray.appendidge +2
+        }
+        else if(this.armor === false){
+            this.acArray.body= this.acArray.body -2
+            this.acArray.appendidge= this.acArray.appendidge -2
+        }
     }
     swiftToggle(){
         this.swift = !this.swift
+        if(this.swift === true){
+            this.acArray.head= this.acArray.head +2
+            this.acArray.body= this.acArray.body +2
+            this.acArray.appendidge= this.acArray.appendidge +2
+        }
+        else if(this.swift === false){
+            this.acArray.head= this.acArray.head -2
+            this.acArray.body= this.acArray.body -2
+            this.acArray.appendidge= this.acArray.appendidge -2
+        }
     }
     damage(damage){
         this.health -= damage
     }
     heal(heal){
-        this.health += heal
+        const diff = this.maxHealth - this.health
+        const max = this.health + heal
+        if(max > this.maxHealth){
+            this.health += diff
+        }
+        else{
+            this.health += heal
+        }
+        
     }
     enrage(){
-        for(let i= 0; i < 2; i++){
-            if(this.health <= (0.1 * this.maxHealth)){
-            this.health += (4 * this.level)
-            }
-        }
-        console.log(this.health)
+        return this.canEnrage
+        // ORRIGINALLY I WAS STORING ALL DATA NEEDED IN EnemyDefinitions.js. 
+        // TO DEMONSTRATE POLYMORPHISM I MOVED THEM INTO THE SUB-CLASSES BELOW
+
+        // if (this.canEnrage === true){
+            // if(this.health <= (0.3 * this.maxHealth)){
+            //     const enrageNum = Math.floor(Math.random() * this.enemyData.enrageProb)
+            //     if(enrageNum === 1){
+            //         this.enraged = true
+            //         const extraHealth = 3 * this.level
+            //         this.health += extraHealth  
+            //     }
+            // }
+            
+        // }
     }
   }
   
   export class Goblin extends Enemy{
-    constructor(level, armor, swift){
-    super(level, armor, swift, GOBLIN)
+    constructor(level, armor, swift, canEnrage){
+    super(level, armor, swift, canEnrage, GOBLIN)
+        this.HEALTH_MULT = 2
+        this.ENRAGE_PROB = 3
+        this.HEALTH_PERC = 0.3
+    }
+    
+    enrage () {
+        if (super.enrage()) {
+            // calculate how Goblin's enrage
+            if(this.health <= (this.HEALTH_PERC * this.maxHealth)){
+                const enrageNum = Math.floor(Math.random() * this.ENRAGE_PROB)
+                if(enrageNum === 1){
+                    this.enraged = true
+                    const extraHealth = this.HEALTH_MULT * this.level
+                    this.health += extraHealth  
+                }
+            }
+        }
     }
   }
   
   export class Dwarf extends Enemy{
-    constructor(level, armor, swift,){
-        super(level, armor, swift, DWARF)
+    constructor(level, armor, swift, canEnrage){
+        super(level, armor, swift, canEnrage, DWARF)
+            this.HEALTH_MULT = 3
+            this.ENRAGE_PROB = 5
+            this.HEALTH_PERC = 0.35
+    }
+    
+    enrage () {
+        if (super.enrage()) {
+            // calculate how Dwarf's enrage
+            if(this.health <= (this.HEALTH_PERC * this.maxHealth)){
+                const enrageNum = Math.floor(Math.random() * this.ENRAGE_PROB)
+                if(enrageNum === 1){
+                    this.enraged = true
+                    const extraHealth = this.HEALTH_MULT * this.level
+                    this.health += extraHealth  
+                }
+            }
+        }
     }
   }
   
   export class Human extends Enemy{
-    constructor(level, armor, swift,){
-    super(level, armor, swift,HUMAN)
+    constructor(level, armor, swift, canEnrage){
+    super(level, armor, swift, canEnrage, HUMAN)
+    this.HEALTH_MULT = 2
+    this.ENRAGE_PROB = 6
+    this.HEALTH_PERC = 0.25
+    }
+    
+    enrage () {
+        if (super.enrage()) {
+            // calculate how Human's enrage
+            if(this.health <= (this.HEALTH_PERC * this.maxHealth)){
+                const enrageNum = Math.floor(Math.random() * this.ENRAGE_PROB)
+                if(enrageNum === 1){
+                    this.enraged = true
+                    const extraHealth = this.HEALTH_MULT * this.level
+                    this.health += extraHealth  
+                }
+            }
+        }
     }
   }
   export class Orc extends Enemy{
-    constructor(level, armor, swift,){
-    super(level, armor, swift, ORC)
+    constructor(level, armor, swift, canEnrage){
+    super(level, armor, swift, canEnrage, ORC)
+    this.HEALTH_MULT = 3
+    this.ENRAGE_PROB = 4
+    this.HEALTH_PERC = 0.3
+    }
+    
+    enrage () {
+        if (super.enrage()) {
+            // calculate how Orc's enrage
+            if(this.health <= (this.HEALTH_PERC * this.maxHealth)){
+                const enrageNum = Math.floor(Math.random() * this.ENRAGE_PROB)
+                if(enrageNum === 1){
+                    this.enraged = true
+                    const extraHealth = this.HEALTH_MULT * this.level
+                    this.health += extraHealth  
+                }
+            }
+        }
     }
   }
   export class Elf extends Enemy{
-    constructor(level, armor, swift,){
-    super(level, armor, swift,ELF)
+    constructor(level, armor, swift, canEnrage){
+    super(level, armor, swift, canEnrage, ELF)
+    this.HEALTH_MULT = 10
+    this.ENRAGE_PROB = 10
+    this.HEALTH_PERC = 0.2
+    }
+    
+    enrage () {
+        if (super.enrage()) {
+            // calculate how Elf's enrage
+            if(this.health <= (this.HEALTH_PERC * this.maxHealth)){
+                const enrageNum = Math.floor(Math.random() * this.ENRAGE_PROB)
+                if(enrageNum === 1){
+                    this.enraged = true
+                    const extraHealth = this.HEALTH_MULT * this.level
+                    this.health += extraHealth  
+                }
+            }
+        }
     }
   }
-  
-//   let bug = new Goblin(1)
-//   let ubol = new Dwarf(5)
-//   let jesse = new Human(2)
-  
-  // console.log("    bug:" +"\n" + bug.toString())
-  // console.log("    ubold:" +"\n" + ubol.toString())
-  // console.log("    Jesse:" +"\n" + jesse.toString())
-  
-  // console.log(jesse.maxHealth)
-  // jesse.damage(19)
-  // console.log(jesse.health)
-  // jesse.enrage()
-
 
   export default Enemy

@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 // import "bootstrap/dist/css/bootstrap.min.css"
 // import "bootstrap-icons/font/bootstrap-icons.css"
 import Enemy, {Human, Dwarf, Elf, Goblin, Orc} from "./Enemy"
@@ -10,16 +10,92 @@ import orc from "../images/races/Orc.png"
 
 
 const FallenCharacters = (props) =>{
-    const {characters, clearCharacters, setCharacters, fallenCharacters, setFallenCharacters}= props
+    const [healthEdit, setHealthEdit] = useState({number:"0"})
+    const {characters, setCharacters, fallenCharacters, setFallenCharacters}= props
 
-    const onSubmit =()=>{
-        console.log("hurt them")
+    const onClickArmor = (e) =>{
+        
+       const currentAtt = e.target.id
+       let clickedChar
+       fallenCharacters.filter((char, idx)=>{
+           if(idx == e.target.id){
+                const cloneArr = [...fallenCharacters]
+                char.armorToggle()
+                cloneArr.splice(idx,1, char)
+                setFallenCharacters(cloneArr)
+                return char
+           } 
+           
+       })
+   }
+
+   const onClickSwift = (e) =>{
+      const currentAtt = e.target.id
+      let clickedChar
+      fallenCharacters.filter((char, idx)=>{
+          if(idx == e.target.id){
+              const cloneArr = [...fallenCharacters]
+              char.swiftToggle()
+              cloneArr.splice(idx,1, char)
+              setFallenCharacters(cloneArr)
+              return char
+          } 
+      })
+      
+  }
+
+
+  const onSubmitHurt = (e)=>{
+    e.preventDefault()
+    fallenCharacters.filter(async (char, idx)=>{
+        if(idx == e.target.id){
+         const number = parseInt(healthEdit.number)
+         char.damage(number)
+         await char.enrage()
+         const cloneArr = [...fallenCharacters]
+         cloneArr.splice(idx,1,char)
+         setFallenCharacters(cloneArr)
+         return char
+        } 
+     
+    })
     }
-    const onClick =()=>{
-        console.log("shield up")
+    const onSubmitHeal =(e)=>{
+        e.preventDefault()
+        fallenCharacters.filter((char, idx)=>{
+            if(idx == e.target.id){
+                const number = parseInt(healthEdit.number)
+                char.heal(number)
+                const cloneArr = [...fallenCharacters]
+                cloneArr.splice(idx,1,char)
+                setFallenCharacters(cloneArr)
+                return char
+            } 
+        })
     }
+    const onChange =(e)=>{
+        setHealthEdit({
+            number : e.target.value
+        })
+    }
+
+
     const onClear =()=>{
         setFallenCharacters([])
+    }
+    const onRessurect =(e)=>{
+        let clickedChar
+        fallenCharacters.filter((char, idx)=>{
+            if(idx == e.target.id){
+                clickedChar = char
+                fallenCharacters.splice(idx,1)
+                
+                return char
+            } 
+            
+        })
+        setCharacters([...characters, clickedChar])
+
     }
     
     return(
@@ -54,7 +130,7 @@ const FallenCharacters = (props) =>{
                     }
 
 
-                    console.log(char)
+                    
                     return(
                         <div key={idx} className="character">
                             <div className="character-top">
@@ -64,13 +140,13 @@ const FallenCharacters = (props) =>{
                                     </div>
                                     <div className="bottom-row"> 
                                     {/* shield */}
-                                    <i id={idx} className={char.armor ? "bi bi-shield-fill" : "bi bi-shield"} onClick={onClick}></i>
+                                    <i id={idx} className={char.armor ? "bi bi-shield-fill" : "bi bi-shield"} onClick={onClickArmor}></i>
                                     {/* lightning */}
-                                    <i id={idx} className={char.swift ? "bi bi-lightning-charge-fill" : "bi bi-lightning-charge"} onClick={onClick}></i>
+                                    <i id={idx} className={char.swift ? "bi bi-lightning-charge-fill" : "bi bi-lightning-charge"} onClick={onClickSwift}></i>
                                     </div>
                                 </div>
                             <div className="health">
-                            <i className="bi bi-x-circle-fill" id="delete-btn"></i>
+                            <i className="bi bi-bandaid-fill delete-btn" id={idx} onClick={onRessurect}></i>
                                 <div className="health-info">
                                     <h5 className="health-title">Health</h5>
                                     <h5>{char.health}</h5>
@@ -86,11 +162,11 @@ const FallenCharacters = (props) =>{
                                 </div> 
                             </div>
                         <div className="health-AC-info">
-                            <form onSubmit={()=>onSubmit()} className="input-group-sm" id="damage">
+                            <form onSubmit={onSubmitHeal} onReset={onSubmitHurt} onChange={onChange} value={healthEdit} className="input-group-sm damage" id={idx} name="number">
                                 <input type='text' className="input-control input-sm col-sm-4 "></input>
                                 <div className="buttons">
-                                    <button type="submit" className="btn btn-success btn-sm">Heal</button>
-                                    <button type="submit" className="btn btn-danger btn-sm">Hurt</button>
+                                    <button type="submit" className="btn btn-success btn-sm heal" id="heal">Heal</button>
+                                    <button type="reset" className="btn btn-danger btn-sm hurt" id="hurt">Hurt</button>
                                 </div>
                             </form>
                             <ul className="AC-list">
