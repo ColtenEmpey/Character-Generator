@@ -7,8 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
+import {useRecoilValue} from 'recoil';
+import { EnrageEnable } from "../App";
+
 const CreateCharacter = (props) =>{
     const {characters, setCharacters}= props
+    const Enrage = useRecoilValue(EnrageEnable)
 
     const [characterRequest, setCharacterRequest] = useState({
         race: '',
@@ -46,7 +50,7 @@ const CreateCharacter = (props) =>{
     }
     const onSubmit = (e) =>{
         e.preventDefault()
-        const canEnrage = true; //TODO: get this from recoil
+        const canEnrage = Enrage; //TODO: get this from recoil
         const newCharacters = []
         const {level, armor, swift} = characterRequest
         for (let i = 0; i < characterRequest.amount; i++) {

@@ -5,8 +5,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
+import {useRecoilState} from 'recoil';
+import { EnrageEnable } from "../App";
+
 const Header = () =>{
     const [isOpen, setIsOpen] = useState(false);
+    //RECOIL USAGE OF STATE
+    const [Enrage, setEnrage] = useRecoilState(EnrageEnable);
+    
+      const onChange = (e) => {
+        setEnrage(!Enrage);
+      };
+    
 
     const showModal = () => {
         setIsOpen(true);
@@ -16,12 +26,13 @@ const Header = () =>{
       setIsOpen(false);
     };
     const saveSettings = () => {
+      window.localStorage.setItem("Enrage",Enrage);
       setIsOpen(false);
     };
 
     const popover=(
       <Popover >
-        <h6>Enrage mode gives an injured character one last spurt of health before they die.</h6>
+        <h6>Enrage mode gives an injured character a chance of gaining one last spurt of health before they die.</h6>
     </Popover>
     )
     
@@ -44,25 +55,17 @@ const Header = () =>{
                         <div>
                           <OverlayTrigger
                             placement="top"
-                            trigger="hover"
+                            trigger="hover,"
                             overlay={popover}>
                               <label className="form-check-label"> Enrage </label>
                           </OverlayTrigger>
-                          <input type="checkbox" className="form-check-input"></input>
-                        </div>
-                        <div>
-                          <label className="form-check-label"> option2 </label>
-                          <input type="checkbox" className="form-check-input"></input>
-                        </div>
-                        <div>
-                          <label className="form-check-label"> option3 </label>
-                          <input type="checkbox" className="form-check-input"></input>
+                          <input type="checkbox" className="form-check-input" name="EnrageEnable" checked={Enrage} onChange={onChange} ></input>
                         </div>
                       </form>
-
                       </Modal.Body>
+
                       <Modal.Footer>
-                        <button type="button" className="btn btn-dark btn-sm" onClick={hideModal}>Cancel</button>
+                        <button type="button" className="btn btn-dark btn-sm" onClick={hideModal}>Cancle</button>
                         <button type="button" className="btn btn-primary btn-sm" onClick={saveSettings}>Save</button>
                       </Modal.Footer>
                     </Modal>
@@ -72,5 +75,6 @@ const Header = () =>{
         </div>
     )
 }
+
 
 export default Header
