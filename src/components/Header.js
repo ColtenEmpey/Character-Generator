@@ -55,7 +55,7 @@ const Header = () =>{
                         <div>
                           <OverlayTrigger
                             placement="top"
-                            trigger="hover,"
+                            trigger="hover"
                             overlay={popover}>
                               <label className="form-check-label"> Enrage </label>
                           </OverlayTrigger>
