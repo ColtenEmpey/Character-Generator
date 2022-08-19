@@ -50,7 +50,7 @@ const CreateCharacter = (props) =>{
     }
     const onSubmit = (e) =>{
         e.preventDefault()
-        const canEnrage = Enrage; //TODO: get this from recoil
+        const canEnrage = Enrage; 
         const newCharacters = []
         const {level, armor, swift} = characterRequest
         for (let i = 0; i < characterRequest.amount; i++) {
