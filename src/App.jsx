@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 
 //COMPONENTS
-import Header from "./components/Header.js"
+import Header from "./components/Header.jsx"
 import CreateCharacter from './components/CreateCharacter';
 import Characters from './components/Characters';
 import FallenCharacters from './components/FallenCharacters';

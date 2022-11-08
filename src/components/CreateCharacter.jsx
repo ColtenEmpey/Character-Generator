@@ -15,7 +15,7 @@ const CreateCharacter = (props) =>{
     const Enrage = useRecoilValue(EnrageEnable)
 
     const [characterRequest, setCharacterRequest] = useState({
-        race: '',
+        race: 'Character Race',
         level: 0,
         armor: false,
         swift: false,
@@ -70,6 +70,10 @@ const CreateCharacter = (props) =>{
             else if(characterRequest.race === "Orc"){
                 character = new Orc(level, armor, swift, canEnrage)
             }
+            else if(characterRequest.race === "Character Race"){
+                return console.log("Chose a Character Race")
+                
+            }
             newCharacters.push(character)
             
           }
@@ -86,7 +90,7 @@ const CreateCharacter = (props) =>{
                     <DropdownButton 
                         onSelect={onSelect}
                         className="dropdown"
-                        title={ characterRequest.race ? characterRequest.race : "Character Race"}
+                        title={characterRequest.race}
                         id="dropdown-menu-align-right"
                         style={{marginRight:"250px"}}
                         >
